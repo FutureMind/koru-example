@@ -11,11 +11,11 @@ dependencies {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(29)
     defaultConfig {
-        applicationId = "com.example.multiplatform.suspendwrapper.androidApp"
+        applicationId = "com.example.multiplatform.koru"
         minSdkVersion(24)
-        targetSdkVersion(30)
+        targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
     }

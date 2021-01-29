@@ -15,7 +15,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        mavenCentral()
-        maven(url = "https://dl.bintray.com/mklimczak/kmm-ios-suspendwrapper")
+        maven(url = "https://dl.bintray.com/ekito/koin")
+        maven(url = "https://dl.bintray.com/futuremind/koru")
     }
 }

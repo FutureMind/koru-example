@@ -16,12 +16,23 @@ kotlin {
         }
     }
     sourceSets {
+
+        val coroutineVersion = "1.4.2-native-mt"
+        val koruVersion = "0.3.2"
+
         val commonMain by getting {
             dependencies {
-                implementation("com.futuremind:ioswrapper-annotation:0.1.1")
+
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion") {
+                    version { strictly(coroutineVersion) }
+                }
+                implementation("org.koin:koin-core:3.0.0-alpha-4")
+
+                implementation("com.futuremind:koru:$koruVersion")
                 configurations.get("kapt").dependencies.add(
                     org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.futuremind", "ioswrapper-processor", "0.1.1"
+                        "com.futuremind", "koru-processor", koruVersion
                     )
                 )
             }
@@ -38,11 +49,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(30)
+    compileSdkVersion(29)
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion(24)
-        targetSdkVersion(30)
+        targetSdkVersion(29)
     }
 }
 
@@ -51,7 +62,8 @@ val packForXcode by tasks.creating(Sync::class) {
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
     val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
     val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
+    val framework =
+        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
     inputs.property("mode", mode)
     dependsOn(framework.linkTask)
     val targetDir = File(buildDir, "xcode-frameworks")
