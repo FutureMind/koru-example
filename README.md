@@ -2,7 +2,7 @@
 
 This is an example repo for [Koru](https://github.com/FutureMind/koru) library which generates coroutine wrappers for Kotlin Multipaltform.
 
-To find out more, start with this article (to be published) or Koru README.
+To find out more, start with [this article](https://medium.com/futuremind/handling-kotlin-multiplatform-coroutines-in-swift-koru-4a80b93f232b) or [Koru README](https://github.com/FutureMind/koru/blob/master/README.md).
 
 ## Abstract examples
 
