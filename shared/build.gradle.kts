@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
 
         val coroutineVersion = "1.4.2-native-mt"
-        val koruVersion = "0.3.2"
+        val koruVersion = "0.3.5"
 
         val commonMain by getting {
             dependencies {
@@ -39,7 +39,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("com.google.android.material:material:1.2.1")
+                implementation("com.google.android.material:material:1.3.0")
             }
         }
         val iosMain by getting {
