@@ -10,6 +10,12 @@ import com.futuremind.koru.ToNativeInterface
 @ToNativeInterface
 interface IExample2 {
 
+    val someone : User?
+
+    var someoneAsVar : User?
+
+    val usersFlow : Flow<User>
+
     fun observeUsers(usersCount: Int): Flow<User>
 
     suspend fun loadUser(username: String): User?
@@ -19,6 +25,12 @@ interface IExample2 {
 
 @ToNativeClass
 class Example2(private val service: UserService) : IExample2 {
+
+    override val someone : User? get() = service.getUser("someone")
+
+    override var someoneAsVar = service.getUser("someone")
+
+    override val usersFlow : Flow<User> = service.loadRandomUsers(5)
 
     override fun observeUsers(usersCount: Int): Flow<User> = service.loadRandomUsers(usersCount)
 

@@ -17,8 +17,8 @@ kotlin {
     }
     sourceSets {
 
-        val coroutineVersion = "1.4.2-native-mt"
-        val koruVersion = "0.3.5"
+        val coroutineVersion = "1.4.3-native-mt"
+        val koruVersion = "0.4.0"
 
         val commonMain by getting {
             dependencies {
@@ -27,7 +27,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion") {
                     version { strictly(coroutineVersion) }
                 }
-                implementation("org.koin:koin-core:3.0.0-alpha-4")
+                implementation("io.insert-koin:koin-core:3.0.1")
 
                 implementation("com.futuremind:koru:$koruVersion")
                 configurations.get("kapt").dependencies.add(
