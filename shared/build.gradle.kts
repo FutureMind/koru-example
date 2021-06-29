@@ -17,8 +17,8 @@ kotlin {
     }
     sourceSets {
 
-        val coroutineVersion = "1.4.3-native-mt"
-        val koruVersion = "0.4.0"
+        val coroutineVersion = "1.5.0-native-mt"
+        val koruVersion = "0.5.0"
 
         val commonMain by getting {
             dependencies {
@@ -27,7 +27,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion") {
                     version { strictly(coroutineVersion) }
                 }
-                implementation("io.insert-koin:koin-core:3.0.1")
+                implementation("io.insert-koin:koin-core:3.1.1")
 
                 implementation("com.futuremind:koru:$koruVersion")
                 configurations.get("kapt").dependencies.add(
@@ -53,7 +53,7 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdkVersion(24)
-        targetSdkVersion(29)
+        targetSdkVersion(30)
     }
 }
 

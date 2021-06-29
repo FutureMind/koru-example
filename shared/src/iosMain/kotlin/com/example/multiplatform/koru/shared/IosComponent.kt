@@ -4,9 +4,9 @@ import com.example.multiplatform.koru.shared.di.commonModule
 import com.example.multiplatform.koru.shared.users.LoadUserUseCaseIos
 import com.example.multiplatform.koru.shared.users.ObserveUsersUseCaseIos
 import com.example.multiplatform.koru.shared.users.SaveUserUseCaseIos
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.context.startKoin
-import org.koin.core.get
 import org.koin.dsl.module
 
 
