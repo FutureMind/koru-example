@@ -1,5 +1,7 @@
 package com.example.multiplatform.koru.shared
 
+import com.example.multiplatform.koru.shared.abstractexamples.FrozenClassExampleIos
+import com.example.multiplatform.koru.shared.abstractexamples.MutableClassExampleIos
 import com.example.multiplatform.koru.shared.di.commonModule
 import com.example.multiplatform.koru.shared.users.LoadUserUseCaseIos
 import com.example.multiplatform.koru.shared.users.ObserveUsersUseCaseIos
@@ -18,6 +20,8 @@ private val iosModule = module {
     factory { LoadUserUseCaseIos(get()) }
     factory { SaveUserUseCaseIos(get()) }
     factory { ObserveUsersUseCaseIos(get()) }
+    factory { MutableClassExampleIos(get()) }
+    factory { FrozenClassExampleIos(get()) }
 }
 
 /**
@@ -28,4 +32,6 @@ class IosComponent : KoinComponent {
     fun provideLoadUserUseCase(): LoadUserUseCaseIos = get()
     fun provideSaveUserUseCase(): SaveUserUseCaseIos = get()
     fun provideObserveUserUseCase(): ObserveUsersUseCaseIos = get()
+    fun provideMutableExample(): MutableClassExampleIos = get()
+    fun provideFrozenExample(): FrozenClassExampleIos = get()
 }

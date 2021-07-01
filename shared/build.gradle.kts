@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
 
         val coroutineVersion = "1.5.0-native-mt"
-        val koruVersion = "0.5.0"
+        val koruVersion = "0.6.0"
 
         val commonMain by getting {
             dependencies {
