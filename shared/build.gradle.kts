@@ -18,7 +18,7 @@ kotlin {
     sourceSets {
 
         val coroutineVersion = "1.5.0-native-mt"
-        val koruVersion = "0.6.0"
+        val koruVersion = "0.7.0"
 
         val commonMain by getting {
             dependencies {
@@ -37,11 +37,7 @@ kotlin {
                 )
             }
         }
-        val androidMain by getting {
-            dependencies {
-                implementation("com.google.android.material:material:1.3.0")
-            }
-        }
+        val androidMain by getting
         val iosMain by getting {
             kotlin.srcDir("${buildDir.absolutePath}/generated/source/kaptKotlin/")
         }
@@ -49,11 +45,11 @@ kotlin {
 }
 
 android {
-    compileSdkVersion(29)
+    compileSdk = 30
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdkVersion(24)
-        targetSdkVersion(30)
+        minSdk = 24
+        targetSdk = 30
     }
 }
 
