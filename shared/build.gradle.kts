@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
 plugins {
     kotlin("multiplatform")
@@ -7,27 +7,46 @@ plugins {
 }
 
 kotlin {
+
     android()
-    ios {
-        binaries {
-            framework {
-                baseName = "shared"
-            }
+
+    val xcf = XCFramework()
+
+    //app store
+    iosArm64 {
+        binaries.framework {
+            baseName = "shared"
+            embedBitcode("bitcode")
+            xcf.add(this)
         }
     }
+
+    //ios simulator m1
+    iosSimulatorArm64 {
+        binaries.framework {
+            baseName = "shared"
+            xcf.add(this)
+        }
+    }
+
+    //ios simulator intel
+    iosX64 {
+        binaries.framework {
+            baseName = "shared"
+            xcf.add(this)
+        }
+    }
+
     sourceSets {
 
-        val coroutineVersion = "1.5.0-native-mt"
-        val koruVersion = "0.7.0"
+        val coroutineVersion = "1.5.2-native-mt"
+        val koruVersion = "0.9.0"
 
         val commonMain by getting {
             dependencies {
-
-
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion") {
                     version { strictly(coroutineVersion) }
                 }
-                implementation("io.insert-koin:koin-core:3.1.1")
 
                 implementation("com.futuremind:koru:$koruVersion")
                 configurations.get("kapt").dependencies.add(
@@ -37,34 +56,26 @@ kotlin {
                 )
             }
         }
+
         val androidMain by getting
-        val iosMain by getting {
+
+        val appleMain by creating {
+            dependsOn(commonMain)
             kotlin.srcDir("${buildDir.absolutePath}/generated/source/kaptKotlin/")
         }
+
+        val iosArm64Main by sourceSets.getting { dependsOn(appleMain) }
+        val iosSimulatorArm64Main by sourceSets.getting { dependsOn(appleMain) }
+        val iosX64Main by sourceSets.getting { dependsOn(appleMain) }
+
     }
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 24
-        targetSdk = 30
+        targetSdk = 31
     }
 }
-
-val packForXcode by tasks.creating(Sync::class) {
-    group = "build"
-    val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
-    val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
-    val framework =
-        kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
-    inputs.property("mode", mode)
-    dependsOn(framework.linkTask)
-    val targetDir = File(buildDir, "xcode-frameworks")
-    from({ framework.outputDirectory })
-    into(targetDir)
-}
-
-tasks.getByName("build").dependsOn(packForXcode)
