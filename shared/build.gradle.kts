@@ -1,12 +1,13 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
+val koruVersion = "0.11.0"
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.futuremind.koru")
+    id("com.futuremind.koru").version("0.11.0")
 }
 
-val koruVersion = "0.11.0"
 
 kotlin {
 
@@ -55,6 +56,7 @@ kotlin {
 
         val appleMain by creating {
             dependsOn(commonMain)
+//            kotlin.srcDir("${buildDir.absolutePath}/generated/ksp/metadata/commonMain/kotlin")
         }
 
         val iosArm64Main by sourceSets.getting { dependsOn(appleMain) }
@@ -73,4 +75,8 @@ android {
         minSdk = 24
         targetSdk = 31
     }
+}
+
+koru {
+    sourceSetNames = listOf("appleMain")
 }

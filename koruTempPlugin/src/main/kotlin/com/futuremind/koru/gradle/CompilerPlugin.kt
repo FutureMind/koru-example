@@ -2,6 +2,7 @@ package com.futuremind.koru.gradle
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
@@ -10,10 +11,14 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 class CompilerPlugin : Plugin<Project> {
 
     override fun apply(project: Project) = with(project) {
+        val extension: KoruPluginExtension = extensions.create("koru")
         addKspPluginDependency()
         enableKspRunForCommonMainSourceSet()
         makeSureCompilationIsRunAfterKsp()
-        addGeneratedFilesToAppleSourceSets()
+        afterEvaluate {
+            println("AAA: ${extension.sourceSetNames}")
+            addGeneratedFilesToSourceSets(extension.sourceSetNames)
+        }
     }
 
     private fun Project.addKspPluginDependency() = pluginManager.apply("com.google.devtools.ksp")
@@ -34,17 +39,23 @@ class CompilerPlugin : Plugin<Project> {
             dependsOn("kspCommonMainKotlinMetadata")
         }
 
-    private fun Project.addGeneratedFilesToAppleSourceSets() = extensions
+    private fun Project.addGeneratedFilesToSourceSets(sourceSetNames: List<String>) = extensions
         .getByType<KotlinMultiplatformExtension>().sourceSets
         .matching {
-            it.name.contains("ios")
+            if(sourceSetNames.isNotEmpty()) {
+                sourceSetNames.contains(it.name)
+            } else {
+                it.name.contains("ios")
                     || it.name.contains("macos")
                     || it.name.contains("watchos")
                     || it.name.contains("tvos")
+            }
         }
         .configureEach {
             kotlin.srcDir("${project.buildDir.absolutePath}/generated/ksp/metadata/commonMain/kotlin")
         }
 }
 
-
+open class KoruPluginExtension {
+    var sourceSetNames : List<String> = listOf()
+}
