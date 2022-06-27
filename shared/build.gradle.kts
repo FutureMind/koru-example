@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("com.futuremind.koru.compiler-plugin")
+    id("com.futuremind.koru")
 }
 
 val koruVersion = "0.11.0"
@@ -15,7 +15,7 @@ kotlin {
     val xcf = XCFramework()
 
     //app store
-    iosArm64 {
+    ios {
         binaries.framework {
             baseName = "shared"
             embedBitcode("bitcode")
@@ -23,16 +23,15 @@ kotlin {
         }
     }
 
-    //ios simulator m1
     iosSimulatorArm64 {
         binaries.framework {
             baseName = "shared"
+            embedBitcode("bitcode")
             xcf.add(this)
         }
     }
 
-    //ios simulator intel
-    iosX64 {
+    tvos {
         binaries.framework {
             baseName = "shared"
             xcf.add(this)
@@ -62,11 +61,7 @@ kotlin {
         val iosSimulatorArm64Main by sourceSets.getting { dependsOn(appleMain) }
         val iosX64Main by sourceSets.getting { dependsOn(appleMain) }
 
-        val commonTest by getting {
-            dependencies {
-                implementation("io.mockative:mockative:1.2.3")
-            }
-        }
+        val commonTest by getting
 
     }
 }

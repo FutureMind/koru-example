@@ -14,8 +14,8 @@ dependencies {
 gradlePlugin {
     plugins {
         create("compilerPlugin") {
-            id = "com.futuremind.koru.compiler-plugin"
-            implementationClass = "com.futuremind.koru.gradle.LePlugin"
+            id = "com.futuremind.koru"
+            implementationClass = "com.futuremind.koru.gradle.CompilerPlugin"
         }
     }
 }
