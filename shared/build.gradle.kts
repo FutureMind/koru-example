@@ -4,7 +4,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("com.google.devtools.ksp") version "1.7.10-1.0.6"
-    id("com.futuremind.koru").version("0.11.0")
+    id("com.futuremind.koru").version("0.11.1")
 }
 
 kotlin {
@@ -41,7 +41,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-                implementation("com.futuremind:koru:0.11.0")
+                implementation("com.futuremind:koru:0.11.1")
             }
         }
 
