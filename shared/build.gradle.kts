@@ -1,13 +1,11 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 
-val koruVersion = "0.11.0"
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
     id("com.futuremind.koru").version("0.11.0")
 }
-
 
 kotlin {
 
@@ -15,11 +13,9 @@ kotlin {
 
     val xcf = XCFramework()
 
-    //app store
     ios {
         binaries.framework {
             baseName = "shared"
-            embedBitcode("bitcode")
             xcf.add(this)
         }
     }
@@ -27,7 +23,6 @@ kotlin {
     iosSimulatorArm64 {
         binaries.framework {
             baseName = "shared"
-            embedBitcode("bitcode")
             xcf.add(this)
         }
     }
@@ -41,14 +36,12 @@ kotlin {
 
     sourceSets {
 
-        val coroutineVersion = "1.5.2-native-mt"
+        val coroutineVersion = "1.6.3"
 
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion") {
-                    version { strictly(coroutineVersion) }
-                }
-                implementation("com.futuremind:koru:$koruVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+                implementation("com.futuremind:koru:0.11.0")
             }
         }
 
@@ -56,7 +49,6 @@ kotlin {
 
         val appleMain by creating {
             dependsOn(commonMain)
-//            kotlin.srcDir("${buildDir.absolutePath}/generated/ksp/metadata/commonMain/kotlin")
         }
 
         val iosArm64Main by sourceSets.getting { dependsOn(appleMain) }
@@ -78,5 +70,5 @@ android {
 }
 
 koru {
-    sourceSetNames = listOf("appleMain")
+    nativeSourceSetNames = listOf("appleMain")
 }
