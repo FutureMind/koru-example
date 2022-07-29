@@ -36,11 +36,9 @@ kotlin {
 
     sourceSets {
 
-        val coroutineVersion = "1.6.3"
-
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
                 implementation("com.futuremind:koru:0.11.1")
             }
         }
