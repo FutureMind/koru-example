@@ -3,7 +3,8 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.apple.XCFramework
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    kotlin("kapt")
+    id("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    id("com.futuremind.koru").version("0.11.1")
 }
 
 kotlin {
@@ -12,16 +13,13 @@ kotlin {
 
     val xcf = XCFramework()
 
-    //app store
-    iosArm64 {
+    ios {
         binaries.framework {
             baseName = "shared"
-            embedBitcode("bitcode")
             xcf.add(this)
         }
     }
 
-    //ios simulator m1
     iosSimulatorArm64 {
         binaries.framework {
             baseName = "shared"
@@ -29,8 +27,7 @@ kotlin {
         }
     }
 
-    //ios simulator intel
-    iosX64 {
+    tvos {
         binaries.framework {
             baseName = "shared"
             xcf.add(this)
@@ -39,21 +36,10 @@ kotlin {
 
     sourceSets {
 
-        val coroutineVersion = "1.5.2-native-mt"
-        val koruVersion = "0.10.0"
-
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion") {
-                    version { strictly(coroutineVersion) }
-                }
-
-                implementation("com.futuremind:koru:$koruVersion")
-                configurations.get("kapt").dependencies.add(
-                    org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency(
-                        "com.futuremind", "koru-processor", koruVersion
-                    )
-                )
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
+                implementation("com.futuremind:koru:0.11.1")
             }
         }
 
@@ -61,12 +47,13 @@ kotlin {
 
         val appleMain by creating {
             dependsOn(commonMain)
-            kotlin.srcDir("${buildDir.absolutePath}/generated/source/kaptKotlin/")
         }
 
         val iosArm64Main by sourceSets.getting { dependsOn(appleMain) }
         val iosSimulatorArm64Main by sourceSets.getting { dependsOn(appleMain) }
         val iosX64Main by sourceSets.getting { dependsOn(appleMain) }
+
+        val commonTest by getting
 
     }
 }
@@ -78,4 +65,8 @@ android {
         minSdk = 24
         targetSdk = 31
     }
+}
+
+koru {
+    nativeSourceSetNames = listOf("appleMain")
 }

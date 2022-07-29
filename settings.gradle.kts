@@ -1,7 +1,6 @@
 pluginManagement {
     repositories {
         google()
-        jcenter()
         gradlePluginPortal()
         mavenCentral()
     }
@@ -10,6 +9,6 @@ pluginManagement {
 rootProject.name = "suspend-wrapper-example"
 
 
-include(":androidApp")
-include(":shared")
+include("androidApp")
+include("shared")
 
