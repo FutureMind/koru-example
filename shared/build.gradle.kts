@@ -4,7 +4,7 @@ plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("com.google.devtools.ksp") version "1.7.10-1.0.6"
-    id("com.futuremind.koru").version("0.11.1")
+    id("com.futuremind.koru").version("0.12.0-SNAPSHOT")
 }
 
 kotlin {
@@ -27,19 +27,12 @@ kotlin {
         }
     }
 
-    tvos {
-        binaries.framework {
-            baseName = "shared"
-            xcf.add(this)
-        }
-    }
-
     sourceSets {
 
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
-                implementation("com.futuremind:koru:0.11.1")
+                implementation("com.futuremind:koru:0.12.0-SNAPSHOT")
             }
         }
 
