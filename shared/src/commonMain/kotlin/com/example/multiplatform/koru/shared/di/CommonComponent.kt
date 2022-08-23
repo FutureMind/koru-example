@@ -6,6 +6,7 @@ import com.example.multiplatform.koru.shared.users.LoadUserUseCase
 import com.example.multiplatform.koru.shared.users.ObserveUsersUseCase
 import com.example.multiplatform.koru.shared.users.SaveUserUseCase
 import com.example.multiplatform.koru.shared.users.UserService
+import com.example.multiplatform.koru.shared.viewmodel.CountdownViewModel
 
 class CommonComponent {
     private val userService = UserService()
@@ -14,4 +15,5 @@ class CommonComponent {
     val observeUserUseCase = ObserveUsersUseCase(userService)
     val mutableClassExample = MutableClassExample()
     val frozenClassExample = FrozenClassExample()
+    val countdownViewModel = CountdownViewModel()
 }

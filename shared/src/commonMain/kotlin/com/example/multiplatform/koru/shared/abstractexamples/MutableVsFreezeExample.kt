@@ -1,6 +1,6 @@
 package com.example.multiplatform.koru.shared.abstractexamples
 
-import com.example.multiplatform.koru.shared.users.MainScopeProvider
+import com.example.multiplatform.koru.shared.scope.MainScopeProvider
 import com.futuremind.koru.ToNativeClass
 import kotlinx.coroutines.*
 

@@ -1,4 +1,4 @@
-package com.example.multiplatform.koru.shared.users
+package com.example.multiplatform.koru.shared.scope
 
 import com.futuremind.koru.ExportedScopeProvider
 import com.futuremind.koru.ScopeProvider

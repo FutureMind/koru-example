@@ -2,6 +2,7 @@ package com.example.multiplatform.koru.shared.users
 
 import com.futuremind.koru.ToNativeClass
 import kotlinx.coroutines.flow.Flow
+import com.example.multiplatform.koru.shared.scope.MainScopeProvider
 
 
 //all in one file for presentation purpose
