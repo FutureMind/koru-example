@@ -4,9 +4,8 @@ import com.futuremind.koru.ToNativeClass
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import com.example.multiplatform.koru.shared.users.MainScopeProvider
+import com.example.multiplatform.koru.shared.scope.MainScopeProvider
 
-//TODO refactor MainScopeProvider package
 @ToNativeClass(
     name = "CountdownViewModelIos",
     launchOnScope = MainScopeProvider::class
