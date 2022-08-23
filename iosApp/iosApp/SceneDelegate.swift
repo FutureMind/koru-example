@@ -1,9 +1,11 @@
 import UIKit
 import SwiftUI
 import shared
+import Combine
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    private var disposables = Set<AnyCancellable>()
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -22,9 +24,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
         
+        runKmmViewModel(sharedComponent: sharedComponent)
         runAbstractExamples(sharedComponent: sharedComponent)
     }
 
+    private func runKmmViewModel(sharedComponent: IosComponent) {
+        let kmmViewModel = sharedComponent.provideCountdownViewModel()
+        createPublisher(wrapper: kmmViewModel.countdown)
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: { [weak self] countdownValue in
+                    print(countdownValue)
+                }
+            )
+            .store(in: &disposables)
+    }
+    
     private func runAbstractExamples(sharedComponent: IosComponent) {
         
         let mutableExample = sharedComponent.provideMutableExample()

@@ -4,7 +4,8 @@
             android:allowBackup="false"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name="com.example.multiplatform.koru.androidApp.MainActivity">
+        <activity android:name="com.example.multiplatform.koru.androidApp.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

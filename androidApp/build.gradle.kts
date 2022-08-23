@@ -7,6 +7,7 @@ dependencies {
     implementation(project(":shared"))
     implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 }
 

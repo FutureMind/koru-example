@@ -36,7 +36,11 @@ kotlin {
             }
         }
 
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+            }
+        }
 
         val appleMain by creating {
             dependsOn(commonMain)
